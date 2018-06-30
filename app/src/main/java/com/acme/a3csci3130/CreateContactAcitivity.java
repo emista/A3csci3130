@@ -6,12 +6,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import javax.microedition.khronos.egl.EGLDisplay;
+
 public class CreateContactAcitivity extends Activity {
 
     private Button submitButton;
-    private EditText nameField, emailField;
+    private EditText numberField, nameField, primaryField, addressField, provinceField;
     private MyApplicationData appState;
 
+    /**
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,18 +25,29 @@ public class CreateContactAcitivity extends Activity {
         appState = ((MyApplicationData) getApplicationContext());
 
         submitButton = (Button) findViewById(R.id.submitButton);
+        numberField=(EditText) findViewById(R.id.number);
         nameField = (EditText) findViewById(R.id.name);
-        emailField = (EditText) findViewById(R.id.email);
+        primaryField = (EditText) findViewById(R.id.primary);
+        addressField = (EditText) findViewById(R.id.address);
+        provinceField = (EditText) findViewById(R.id.province);
     }
 
+    /**
+     * @param v
+     */
     public void submitInfoButton(View v) {
         //each entry needs a unique ID
-        String personID = appState.firebaseReference.push().getKey();
-        String name = nameField.getText().toString();
-        String email = emailField.getText().toString();
-        Contact person = new Contact(personID, name, email);
+        String businessID = appState.firebaseReference.push().getKey();
 
-        appState.firebaseReference.child(personID).setValue(person);
+        String  number = numberField.getText().toString();
+        String name = nameField.getText().toString();
+        String primary = primaryField.getText().toString();
+        String address = addressField.getText().toString();
+        String province = provinceField.getText().toString();
+        Contact business = new Contact(businessID, number, name,primary,address, province);
+        //Contact person = new Contact(personID, name, email);
+
+        appState.firebaseReference.child(businessID).setValue(business);
 
         finish();
 

@@ -12,22 +12,41 @@ import java.util.Map;
  * Firebase databse. This is converted to a JSON format
  */
 
-public class Contact implements Serializable {
 
-    public int BusinessNumber;
+
+public class Contact implements Serializable {
+    /**
+     * BusinessNumber: 9 digit number
+     * Name: 2-48 characters
+     * PrimaryBusiness:{Fisher, Distributor, Processor, Fish Monger}
+     * Address: <50 characters
+     * Province: {AB, BC, MB, NB, NL, NS, NT, NU, ON, PE, QC, SK, YT, “ “}
+     */
+
+    public String bID;
+    public String BusinessNumber;
     public String Name;
-    public String PrimaryBussiness;
+    public String PrimaryBusiness;
     public String Address;
     public String Province;
 
     public Contact() {
-
+        // Default constructor required for calls to DataSnapshot.getValue
     }
 
-    public Contact(int BusinessNumber, String Name, String PrimaryBussiness, String Address, String Province){
+    /**
+     * @param bID
+     * @param BusinessNumber
+     * @param Name
+     * @param PrimaryBusiness
+     * @param Address
+     * @param Province
+     */
+    public Contact(String bID, String BusinessNumber, String Name, String PrimaryBusiness, String Address, String Province){
+        this.bID=bID;
         this.BusinessNumber=BusinessNumber;
         this.Name = Name;
-        this.PrimaryBussiness=PrimaryBussiness;
+        this.PrimaryBusiness=PrimaryBusiness;
         this.Address=Address;
         this.Province=Province;
     }
@@ -35,9 +54,10 @@ public class Contact implements Serializable {
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
+        result.put("bID", bID);
         result.put("BusinessNumber", BusinessNumber);
         result.put("Name", Name);
-        result.put("PrimaryBusiness", PrimaryBussiness);
+        result.put("PrimaryBusiness", PrimaryBusiness);
         result.put("Address", Address);
         result.put("Province", Province);
 

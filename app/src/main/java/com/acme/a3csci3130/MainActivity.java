@@ -17,6 +17,9 @@ public class MainActivity extends Activity {
     private ListView contactListView;
     private FirebaseListAdapter<Contact> firebaseAdapter;
 
+    /**
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +41,7 @@ public class MainActivity extends Activity {
             @Override
             protected void populateView(View v, Contact model, int position) {
                 TextView contactName = (TextView)v.findViewById(android.R.id.text1);
-                contactName.setText(model.name);
+                contactName.setText(model.Name);
             }
         };
         contactListView.setAdapter(firebaseAdapter);
@@ -46,22 +49,28 @@ public class MainActivity extends Activity {
             // onItemClick method is called everytime a user clicks an item on the list
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Contact person = (Contact) firebaseAdapter.getItem(position);
-                showDetailView(person);
+                Contact business = (Contact) firebaseAdapter.getItem(position);
+                showDetailView(business);
             }
         });
     }
 
+    /**
+     * @param v
+     */
     public void createContactButton(View v)
     {
         Intent intent=new Intent(this, CreateContactAcitivity.class);
         startActivity(intent);
     }
 
-    private void showDetailView(Contact person)
+    /**
+     * @param business
+     */
+    private void showDetailView(Contact business)
     {
         Intent intent = new Intent(this, DetailViewActivity.class);
-        intent.putExtra("Contact", person);
+        intent.putExtra("Contact", business);
         startActivity(intent);
     }
 
